@@ -30,8 +30,8 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         builder: ${{ steps.buildx.outputs.name }}
-        context: .
-        file: ./php-fpm/Dockerfile
+        context: './php-fpm'
+        file: './php-fpm/Dockerfile'
         platforms: linux/amd64,linux/armhf
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/php-fpm
