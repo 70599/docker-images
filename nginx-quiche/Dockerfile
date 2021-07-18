@@ -104,7 +104,7 @@ RUN  apk --update upgrade \
         --add-module=../nginx_cookie_flag_module \
         --with-cc-opt=-Wno-error
 
-RUN  cd ${BUILD_PATH} \
+RUN  cd ${BUILD_PATH}/nginx-* \
      && make -j$(getconf _NPROCESSORS_ONLN) \
      && make install \
      && install -m755 objs/ngx_http_xslt_filter_module.so ${MODULE_PATH}/ngx_http_xslt_filter_module.so \
