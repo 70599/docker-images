@@ -1,7 +1,7 @@
 FROM alpine AS builder
 
-ENV  BUILD_PATH /tmp/build
-ENV  MODULE_PATH /usr/lib/nginx/modules
+ENV  BUILD_PATH '/tmp/build'
+ENV  MODULE_PATH '/usr/lib/nginx/modules'
 ENV  PCRE_VERSION 8.45
 ENV  ZLIB_VERSION 1.2.11
 

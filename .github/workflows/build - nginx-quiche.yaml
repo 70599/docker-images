@@ -1,4 +1,4 @@
-name: build and push
+name: nginx-quiche
 
 on:
   push:

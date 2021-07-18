@@ -1,4 +1,4 @@
-name: build and push
+name: php-fpm
 
 on:
   push:
@@ -43,7 +43,6 @@ jobs:
         builder: ${{ steps.buildx.outputs.name }}
         context: ./php-fpm
         file: ./php-fpm/Dockerfile
-        target: prod
         platforms: linux/amd64,linux/armhf
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/php-fpm

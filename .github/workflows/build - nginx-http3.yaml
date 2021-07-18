@@ -1,4 +1,4 @@
-name: build and push
+name: nginx-http3
 
 on:
   push:
