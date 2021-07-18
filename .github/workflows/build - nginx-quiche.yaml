@@ -43,7 +43,7 @@ jobs:
         builder: ${{ steps.buildx.outputs.name }}
         context: ./nginx-quiche
         file: ./nginx-quiche/Dockerfile
-        platforms: linux/amd64
+        platforms: linux/amd64,linux/armhf
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/nginx-quiche
         cache-from: type=local,src=/tmp/.buildx-cache

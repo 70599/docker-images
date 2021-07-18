@@ -35,7 +35,6 @@ RUN  apk --update upgrade \
      && cd ${BUILD_PATH} \
      && wget -qO- https://ftp.pcre.org/pub/pcre/pcre-${PCRE_VER}.tar.gz | tar zxvf - \
      && wget -qO- http://zlib.net/zlib-${ZLIB_VER}.tar.gz | tar zxvf - \
-     && cd zlib-${ZLIB_VER} \
      && NGINX_VER="$(curl -sL https://api.github.com/repos/nginx/nginx/tags | jq -r '.[0].name')" \
      && git clone --depth=1 --recursive --shallow-submodules https://github.com/google/ngx_brotli \
      && git clone --depth=1 --recursive https://github.com/nginx/njs \
