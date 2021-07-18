@@ -5,10 +5,10 @@ on:
     branches:
     - master
     paths:
-    - php-fpm/Dockerfile
+    - nginx-http3/Dockerfile
 
 jobs:
-  php-fpm:
+  nginx-http3:
     runs-on: ubuntu-latest
 
     steps:
@@ -37,18 +37,17 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Build and push
-      id: build_php_fpm
+      id: build_nginx_http3
       uses: docker/build-push-action@v2
       with:
         builder: ${{ steps.buildx.outputs.name }}
-        context: ./php-fpm
-        file: ./php-fpm/Dockerfile
-        target: prod
+        context: ./nginx-http3
+        file: ./nginx-http3/Dockerfile
         platforms: linux/amd64,linux/armhf
         push: true
-        tags: ${{ secrets.DOCKERHUB_USERNAME }}/php-fpm
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/nginx-http3
         cache-from: type=local,src=/tmp/.buildx-cache
         cache-to: type=local,dest=/tmp/.buildx-cache
 
     - name: Image digest
-      run: echo ${{ steps.build_php_fpm.outputs.digest }}
+      run: echo ${{ steps.build_nginx_http3.outputs.digest }}

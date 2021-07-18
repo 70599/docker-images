@@ -17,5 +17,4 @@ RUN   apk add --update --no-cache freetype-dev libwebp-dev libjpeg-turbo-dev lib
 
 RUN   apk add --update --no-cache bash
 
-
 CMD   ["php-fpm"]
