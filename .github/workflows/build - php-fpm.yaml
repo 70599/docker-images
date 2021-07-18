@@ -5,7 +5,7 @@ on:
     branches:
     - master
     paths:
-    - php-fpm/Dockerfile
+    - php/Dockerfile
 
 jobs:
   docker:
@@ -30,8 +30,8 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         builder: ${{ steps.buildx.outputs.name }}
-        context: './php-fpm'
-        file: './php-fpm/Dockerfile'
+        context: ./php
+        file: ./php/Dockerfile
         platforms: linux/amd64,linux/armhf
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/php-fpm
