@@ -44,7 +44,7 @@ RUN  apk --update upgrade \
      && git clone --depth=1 https://github.com/kn007/patch patches \
      && wget -qO- https://github.com/nginx/nginx/archive/refs/tags/${NGINX_VER}.tar.gz | tar zxvf - \
      && cd nginx-${NGINX_VER} \
-     && patch -p01 < ../patches/nginx.patch \
+     # && patch -p01 < ../patches/nginx.patch \
      && patch -p01 < ../patches/nginx_with_quic.patch \
      && patch -p01 < ../patches/Enable_BoringSSL_OCSP.patch \
      && ./auto/configure \
