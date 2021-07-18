@@ -24,6 +24,7 @@ RUN  apk --update upgrade \
      && apk add --no-cache --virtual .brotli-build-deps \
         autoconf \
         automake \
+        cargo \
         cmake \
         g++ \
         git \
