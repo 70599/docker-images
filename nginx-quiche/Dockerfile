@@ -2,8 +2,8 @@ FROM alpine AS builder
 
 ENV  BUILD_PATH '/tmp/build'
 ENV  MODULE_PATH '/usr/lib/nginx/modules'
-ENV  PCRE_VERSION 8.45
-ENV  ZLIB_VERSION 1.2.11
+ENV  PCRE_VER 8.45
+ENV  ZLIB_VER 1.2.11
 
 RUN  apk --update upgrade \
      && apk add --no-cache --virtual .build-deps \
@@ -33,9 +33,9 @@ RUN  apk --update upgrade \
         perl \
      && [ -e ${BUILD_PATH} ] || mkdir -p ${BUILD_PATH} \
      && cd ${BUILD_PATH} \
-     && wget -qO- https://ftp.pcre.org/pub/pcre/pcre-${PCRE_VERSION}.tar.gz | tar zxvf - \
-     && wget -qO- http://zlib.net/zlib-${ZLIB_VERSION}.tar.gz | tar zxvf - \
-     && cd zlib-${ZLIB_VERSION} \
+     && wget -qO- https://ftp.pcre.org/pub/pcre/pcre-${PCRE_VER}.tar.gz | tar zxvf - \
+     && wget -qO- http://zlib.net/zlib-${ZLIB_VER}.tar.gz | tar zxvf - \
+     && cd zlib-${ZLIB_VER} \
      && NGINX_VER="$(curl -sL https://api.github.com/repos/nginx/nginx/tags | jq -r '.[0].name')" \
      && git clone --depth=1 --recursive --shallow-submodules https://github.com/google/ngx_brotli \
      && git clone --depth=1 --recursive https://github.com/nginx/njs \
@@ -48,7 +48,7 @@ RUN  apk --update upgrade \
      && patch -p01 < ../patches/nginx_with_quic.patch \
      && patch -p01 < ../patches/Enable_BoringSSL_OCSP.patch \
      && ./auto/configure \
-        --build="quiche-$(git --git-dir=../quiche/.git rev-parse --short HEAD) pcre-${PCRE_VERSION} zlib-${ZLIB_VERSION} ngx_brotli-$(git --git-dir=../ngx_brotli/.git rev-parse --short HEAD) njs-$(git --git-dir=../njs/.git rev-parse --short HEAD) nginx_cookie_flag_module-$(git --git-dir=../nginx_cookie_flag_module/.git rev-parse --short HEAD)" \
+        --build="quiche-$(git --git-dir=../quiche/.git rev-parse --short HEAD) pcre-${PCRE_VER} zlib-${ZLIB_VER} ngx_brotli-$(git --git-dir=../ngx_brotli/.git rev-parse --short HEAD) njs-$(git --git-dir=../njs/.git rev-parse --short HEAD) nginx_cookie_flag_module-$(git --git-dir=../nginx_cookie_flag_module/.git rev-parse --short HEAD)" \
         --prefix=/etc/nginx \
         --sbin-path=/usr/sbin/nginx \
         --modules-path=${MODULE_PATH} \
@@ -64,9 +64,9 @@ RUN  apk --update upgrade \
         --http-scgi-temp-path=/var/cache/nginx/scgi_temp \
         --user=nginx \
         --group=nginx \
-        --with-pcre=../pcre-${PCRE_VERSION} \
+        --with-pcre=../pcre-${PCRE_VER} \
         --with-pcre-jit \
-        --with-zlib=../zlib-${ZLIB_VERSION} \
+        --with-zlib=../zlib-${ZLIB_VER} \
         --with-http_ssl_module \
         --with-http_realip_module \
         --with-http_addition_module \
