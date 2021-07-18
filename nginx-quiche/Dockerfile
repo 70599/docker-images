@@ -2,7 +2,7 @@ FROM alpine AS builder
 
 ENV  BUILD_PATH '/tmp/build'
 ENV  MODULE_PATH '/usr/lib/nginx/modules'
-ENV  PCRE_VERSION 8.44
+ENV  PCRE_VERSION 8.45
 ENV  ZLIB_VERSION 1.2.11
 
 RUN  apk --update upgrade \
@@ -102,17 +102,16 @@ RUN  apk --update upgrade \
         --add-module=../ngx_brotli \
         --add-module=../njs/nginx \
         --add-module=../nginx_cookie_flag_module \
-        --with-cc-opt=-Wno-error
-
-RUN  cd ${BUILD_PATH}/nginx-* \
+        --with-cc-opt=-Wno-error \
      && make -j$(getconf _NPROCESSORS_ONLN) \
      && make install \
      && install -m755 objs/ngx_http_xslt_filter_module.so ${MODULE_PATH}/ngx_http_xslt_filter_module.so \
      && install -m755 objs/ngx_http_image_filter_module.so ${MODULE_PATH}/ngx_http_image_filter_module.so \
      && install -m755 objs/ngx_http_geoip_module.so ${MODULE_PATH}/ngx_http_geoip_module.so \
      && install -m755 objs/ngx_http_perl_module.so ${MODULE_PATH}/ngx_http_perl_module.so \
-     && install -m755 objs/ngx_stream_geoip_module.so ${MODULE_PATH}/ngx_stream_geoip_module.so \
-     && apk add --no-cache --virtual .gettext gettext \
+     && install -m755 objs/ngx_stream_geoip_module.so ${MODULE_PATH}/ngx_stream_geoip_module.so
+
+RUN  apk add --no-cache --virtual .gettext gettext \
      && mv /usr/bin/envsubst /tmp/ \
      \
      && runDeps="$( \
