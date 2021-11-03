@@ -13,8 +13,10 @@ RUN   apk add --update --no-cache ${PHPIZE_DEPS} git imagemagick-dev libgomp lib
 
 RUN   apk add --update --no-cache freetype-dev libwebp-dev libjpeg-turbo-dev libpng-dev libxml2-dev libzip-dev \
 			&& docker-php-ext-configure gd --with-freetype --with-webp --with-jpeg \
-      && docker-php-ext-configure gmp \
-			&& docker-php-ext-install -j$(nproc) bcmath exif gd gmp mysqli opcache pdo_mysql soap zip
+			&& docker-php-ext-install -j$(nproc) bcmath exif gd mysqli opcache pdo_mysql soap zip
+
+RUN   docker-php-ext-configure gmp \
+			&& docker-php-ext-install -j$(nproc) gmp
 
 RUN   apk add --update --no-cache bash
 
