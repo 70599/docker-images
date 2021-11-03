@@ -15,7 +15,7 @@ RUN   apk add --update --no-cache freetype-dev libwebp-dev libjpeg-turbo-dev lib
 			&& docker-php-ext-configure gd --with-freetype --with-webp --with-jpeg \
 			&& docker-php-ext-install -j$(nproc) bcmath exif gd mysqli opcache pdo_mysql soap zip
 
-RUN   apk add --update --no-cache gmp \
+RUN   apk add --update --no-cache gmp php8-gmp \
 			&& docker-php-ext-configure gmp \
 			&& docker-php-ext-install -j$(nproc) gmp
 
