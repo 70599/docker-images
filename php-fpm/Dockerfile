@@ -19,6 +19,9 @@ RUN   apk add --update --no-cache gmp-dev \
 			&& docker-php-ext-configure gmp \
 			&& docker-php-ext-install -j$(nproc) gmp
 
+RUN   wget -O /usr/local/bin/wp https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
+      && chmod +x /usr/local/bin/wp
+
 RUN   apk add --update --no-cache bash
 
 
