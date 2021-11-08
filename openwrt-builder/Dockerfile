@@ -7,10 +7,7 @@ RUN   set -ex \
       linux-headers make ncurses-dev openssl-dev patch perl python2-dev \
       python3-dev rsync tar unzip util-linux wget zlib-dev \
 
-RUN   adduser \
-      --disabled-password \
-      --uid 12345 \
-      user
+RUN   adduser -D --uid 12345 user
 
 USER     user
 WORKDIR  /home/user

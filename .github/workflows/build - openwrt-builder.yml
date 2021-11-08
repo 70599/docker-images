@@ -43,7 +43,7 @@ jobs:
         file: ./openwrt-builder/Dockerfile
         platforms: linux/amd64,linux/armhf,linux/arm64
         push: true
-        tags: ${{ secrets.DOCKERHUB_USERNAME }}/php-fpm
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/openwrt-builder
         cache-from: type=local,src=/tmp/.buildx-cache
         cache-to: type=local,dest=/tmp/.buildx-cache
 
