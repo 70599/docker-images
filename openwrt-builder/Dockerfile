@@ -6,7 +6,11 @@ RUN   set -ex \
       findutils flex g++ gawk gcc gettext git grep intltool libxslt \
       linux-headers make ncurses-dev openssl-dev patch perl python2-dev \
       python3-dev rsync tar unzip util-linux wget zlib-dev \
-      && adduser user
+
+RUN   adduser \
+      --disabled-password \
+      --uid 12345 \
+      user
 
 USER     user
 WORKDIR  /home/user
