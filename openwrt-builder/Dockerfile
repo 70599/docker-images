@@ -11,4 +11,5 @@ RUN   set -ex \
 USER     user
 WORKDIR  /home/user
 
-RUN  git config --global user.name "user" && git config --global user.email "user@openwrt-builder-in-docker"
+RUN  git config --global user.name "user" \
+     && git config --global user.email "user@openwrt-builder-in-docker"
