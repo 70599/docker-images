@@ -41,7 +41,8 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Set PHP version
-      run: [ -z $VERSION ] || sed -i "s|php:fpm-alpine|php:${VERSION}-fpm-alpine|g" php-fpm/Dockerfile
+      if: $VERSION !== ''
+      run: sed -i 's|php:fpm-alpine|php:${VERSION}-fpm-alpine|g' php-fpm/Dockerfile
 
     - name: Build and push
       id: build_php_fpm
