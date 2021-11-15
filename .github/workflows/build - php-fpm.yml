@@ -1,11 +1,12 @@
 name: php-fpm
 
 on:
-  push:
-    branches:
-    - master
-    paths:
-    - php-fpm/Dockerfile
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'The version of PHP'
+        required: false
+        default: ''
 
 jobs:
   php-fpm:
@@ -36,13 +37,17 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+    - name: Set PHP version
+      if: ${{ github.event.inputs.version }} != ''
+      run: sed -i 's|php:fpm-alpine|php:${{ github.event.inputs.version }}-fpm-alpine|g' php-fpm/Dockerfile
+
     - name: Build and push
       id: build_php_fpm
       uses: docker/build-push-action@v2
       with:
         builder: ${{ steps.buildx.outputs.name }}
-        context: ./php-fpm
-        file: ./php-fpm/Dockerfile
+        context: php-fpm
+        file: php-fpm/Dockerfile
         platforms: linux/amd64,linux/armhf,linux/arm64
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/php-fpm

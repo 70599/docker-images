@@ -1,4 +1,4 @@
-FROM  php:8.0.12-fpm-alpine
+FROM  php:fpm-alpine
 
 RUN   apk add --update --no-cache ${PHPIZE_DEPS} git imagemagick-dev libgomp libmemcached-dev libtool zlib-dev \
       && git clone https://github.com/Imagick/imagick \
