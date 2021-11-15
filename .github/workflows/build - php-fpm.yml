@@ -38,7 +38,7 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Set PHP version
-      if: ${{ github.event.inputs.version }} !== ''
+      if: ${{ github.event.inputs.version }}
       run: sed -i 's|php:fpm-alpine|php:${{ github.event.inputs.version }}-fpm-alpine|g' php-fpm/Dockerfile
 
     - name: Build and push
