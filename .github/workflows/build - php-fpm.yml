@@ -8,6 +8,9 @@ on:
         required: false
         default: ''
 
+env:
+  VERSION: ${{ github.event.inputs.version }}
+
 jobs:
   php-fpm:
     runs-on: ubuntu-latest
@@ -38,8 +41,7 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Set PHP version
-      if: ${{ github.event.inputs.version }} != ''
-      run: sed -i 's|php:fpm-alpine|php:${{ github.event.inputs.version }}-fpm-alpine|g' php-fpm/Dockerfile
+      run: [ -z $VERSION ] || sed -i "s|php:fpm-alpine|php:${VERSION}-fpm-alpine|g" php-fpm/Dockerfile
 
     - name: Build and push
       id: build_php_fpm
