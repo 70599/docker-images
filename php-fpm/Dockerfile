@@ -7,7 +7,8 @@ RUN   apk add --update --no-cache ${PHPIZE_DEPS} git imagemagick-dev libgomp lib
       && make && make install \
       && pecl install memcached \
       && pecl install redis \
-      && docker-php-ext-enable imagick memcached redis \
+      && pecl install uuid \
+      && docker-php-ext-enable imagick memcached redis uuid \
       && apk del ${PHPIZE_DEPS} git libtool \
       && rm -rf /tmp/pear
 
