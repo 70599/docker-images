@@ -1,14 +1,13 @@
 FROM  php:fpm-alpine
 
-RUN   apk add --update --no-cache ${PHPIZE_DEPS} git imagemagick-dev libgomp libmemcached-dev libtool libuuid zlib-dev \
+RUN   apk add --update --no-cache ${PHPIZE_DEPS} git imagemagick-dev libgomp libmemcached-dev libtool zlib-dev \
       && git clone https://github.com/Imagick/imagick \
       && cd imagick \
       && phpize && ./configure \
       && make && make install \
       && pecl install memcached \
       && pecl install redis \
-      && pecl install uuid \
-      && docker-php-ext-enable imagick memcached redis uuid \
+      && docker-php-ext-enable imagick memcached redis \
       && apk del ${PHPIZE_DEPS} git libtool \
       && rm -rf /tmp/pear
 
