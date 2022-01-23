@@ -7,6 +7,10 @@ on:
         description: 'The version of SNELL'
         required: false
         default: ''
+      glibc_version:
+        description: 'The version of GLIBC'
+        required: false
+        default: ''
 
 jobs:
   snell:
@@ -38,8 +42,12 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Set SNELL version
-      if: ${{ github.event.inputs.version }}
+      if: ${{ github.event.inputs.snell_version }}
       run: sed -i 's|ARG SNELL_VERSION 3.0.0|ARG SNELL_VERSION ${{ github.event.inputs.snell_version }}|g' snell/Dockerfile
+
+    - name: Set GLIBC version
+      if: ${{ github.event.inputs.glibc_version }}
+      run: sed -i 's|ARG GLIBC_VERSION 2.34-r0|ARG SNELL_VERSION ${{ github.event.inputs.glibc_version }}|g' snell/Dockerfile
 
     - name: Build and push
       id: build_snell
