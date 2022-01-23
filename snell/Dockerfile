@@ -1,6 +1,6 @@
 FROM alpine as builder
 
-ARG SNELL_VERSION 3.0.0
+ENV SNELL_VERSION 3.0.0
 
 RUN apk add --update --no-cache upx unzip \
   && wget -O snell-server.zip https://github.com/surge-networks/snell/releases/download/v${SNELL_VERSION}/snell-server-v${SNELL_VERSION}-linux-amd64.zip \
@@ -12,7 +12,7 @@ RUN apk add --update --no-cache upx unzip \
 
 FROM alpine
 
-ARG GLIBC_VERSION 2.34-r0
+ENV GLIBC_VERSION 2.34-r0
 
 ENV SERVER_HOST 0.0.0.0
 ENV SERVER_PORT 8388
