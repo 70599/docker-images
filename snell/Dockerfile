@@ -2,11 +2,10 @@ FROM alpine as builder
 
 ENV SNELL_VERSION 3.0.0
 
-RUN apk add --update --no-cache upx unzip \
+RUN apk add --update --no-cache unzip \
   && wget -O snell-server.zip https://github.com/surge-networks/snell/releases/download/v${SNELL_VERSION}/snell-server-v${SNELL_VERSION}-linux-amd64.zip \
   && unzip snell-server.zip \
   && [ -x snell-server ] || chmod + snell-server \
-  && upx --brute snell-server \
   && mv snell-server /usr/local/bin/
 
 
