@@ -48,7 +48,7 @@ jobs:
         builder: ${{ steps.buildx.outputs.name }}
         context: php-fpm
         file: php-fpm/Dockerfile
-        platforms: linux/amd64,linux/armhf,linux/arm64
+        platforms: linux/amd64,linux/arm64
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/php-fpm
         cache-from: type=local,src=/tmp/.buildx-cache
