@@ -2,7 +2,7 @@ FROM alpine as builder
 
 COPY build.sh /
 
-RUN apk add --update --no-cache upx && /bin/sh build.sh
+RUN apk add --update --no-cache jq upx && /bin/sh build.sh
 
 
 FROM alpine
