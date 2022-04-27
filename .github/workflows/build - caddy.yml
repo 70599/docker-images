@@ -2,6 +2,11 @@ name: caddy
 
 on:
   workflow_dispatch:
+    inputs:
+      version:
+        description: 'The version of Repo'
+        required: false
+        default: ''
 
 jobs:
   caddy:
@@ -31,6 +36,10 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Set Repo version
+      if: ${{ github.event.inputs.version }}
+      run: sed -i 's|version=""|version="${{ github.event.inputs.version }}"|g' caddy/build.sh
 
     - name: Build and push
       id: build_caddy
