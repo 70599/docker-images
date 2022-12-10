@@ -1,6 +1,6 @@
 FROM  php:fpm-alpine
 
-RUN   apk add --update --no-cache ${PHPIZE_DEPS} git imagemagick-dev libgomp libmemcached-dev libtool zlib-dev \
+RUN   apk add --update --no-cache ${PHPIZE_DEPS} git icu-i18n icu-io icu-uc imagemagick-dev libgomp libmemcached-dev libtool zlib-dev \
       && git clone https://github.com/Imagick/imagick \
       && cd imagick \
       && phpize && ./configure \
