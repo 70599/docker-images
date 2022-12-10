@@ -5,6 +5,7 @@ RUN   apk add --update --no-cache ${PHPIZE_DEPS} git imagemagick-dev libgomp lib
       && cd imagick \
       && phpize && ./configure \
       && make && make install \
+      && pecl install intl \
       && pecl install memcached \
       && pecl install redis \
       && docker-php-ext-enable imagick memcached redis \
