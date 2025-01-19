@@ -1,23 +1,23 @@
 FROM  php:fpm-alpine
   
 RUN   apk add --update --no-cache ${PHPIZE_DEPS} git imagemagick-dev libgomp libmemcached-dev libtool zlib-dev
-      git clone https://github.com/Imagick/imagick
-      cd imagick
-      phpize && ./configure
-      make && make install
-      pecl install memcached
-      pecl install redis
-      docker-php-ext-enable imagick memcached redis
-      apk del ${PHPIZE_DEPS} git libtool
-      rm -rf /tmp/pear
+RUN   git clone https://github.com/Imagick/imagick
+RUN   cd imagick
+RUN   phpize && ./configure
+RUN   make && make install
+RUN   pecl install memcached
+RUN   pecl install redis
+RUN   docker-php-ext-enable imagick memcached redis
+RUN   apk del ${PHPIZE_DEPS} git libtool
+RUN   rm -rf /tmp/pear
 
 RUN   apk add --update --no-cache freetype-dev libwebp-dev libjpeg-turbo-dev libpng-dev libxml2-dev libzip-dev
-      docker-php-ext-configure gd --with-freetype --with-webp --with-jpeg
-      docker-php-ext-install -j$(nproc) bcmath exif gd mysqli opcache pdo_mysql soap zip
+RUN   docker-php-ext-configure gd --with-freetype --with-webp --with-jpeg
+RUN   docker-php-ext-install -j$(nproc) bcmath exif gd mysqli opcache pdo_mysql soap zip
 
 RUN   apk add --update --no-cache gmp-dev
-      docker-php-ext-configure gmp
-      docker-php-ext-install -j$(nproc) gmp
+RUN   docker-php-ext-configure gmp
+RUN   docker-php-ext-install -j$(nproc) gmp
 
 RUN   apk add --update --no-cache bash
 
