@@ -1,7 +1,7 @@
 FROM  php:fpm-alpine
   
 RUN   apk add --update --no-cache ${PHPIZE_DEPS} git imagemagick-dev libgomp libmemcached-dev libtool zlib-dev
-RUN   pecl install imagick
+RUN   pecl install imagick-3.7.0
 RUN   pecl install memcached
 RUN   pecl install redis
 RUN   docker-php-ext-enable imagick memcached redis
