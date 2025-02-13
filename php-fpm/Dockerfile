@@ -3,7 +3,7 @@ FROM  php:fpm-alpine
 RUN   apk add --update --no-cache ${PHPIZE_DEPS} git imagemagick-dev libgomp libmemcached-dev libtool zlib-dev
 RUN   pecl install memcached
 RUN   pecl install redis
-RUN   docker-php-ext-enable imagick memcached redis
+RUN   docker-php-ext-enable memcached redis
 RUN   apk del ${PHPIZE_DEPS} git libtool
 RUN   rm -rf /tmp/pear
 
