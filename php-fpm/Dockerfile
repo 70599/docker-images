@@ -3,13 +3,7 @@ FROM  php:fpm-alpine
 RUN   apk add --update --no-cache ${PHPIZE_DEPS} git imagemagick-dev libgomp libmemcached-dev libtool zlib-dev
 RUN   git clone https://github.com/Imagick/imagick
 RUN   pwd
-RUN   cd imagick && pwd && ls -l config.m4
-RUN   pwd
-RUN   ls -l
-RUN   ls -l imagick/config.m4
-RUN   phpize && ./configure
-RUN   make
-RUN   make install
+RUN   cd imagick && pwd && phpize && ./configure && make && make install
 RUN   pecl install memcached
 RUN   pecl install redis
 RUN   docker-php-ext-enable imagick memcached redis
