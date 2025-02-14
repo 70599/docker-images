@@ -4,7 +4,8 @@ RUN   apk add --update --no-cache ${PHPIZE_DEPS} git imagemagick-dev libgomp lib
 RUN   git clone https://github.com/Imagick/imagick
 RUN   cd imagick
 RUN   tree ./
-RUN   ls -l config.m4
+RUN   ls -l
+RUN   ls -l imagick/config.m4
 RUN   phpize && ./configure
 RUN   make
 RUN   make install
