@@ -13,7 +13,6 @@ RUN   set -ex \
           && make -j "$(nproc)" \
           && make install \
       ) \
-      && rm -r imagick \
       && docker-php-ext-enable imagick
 RUN   pecl install memcached
 RUN   pecl install redis
