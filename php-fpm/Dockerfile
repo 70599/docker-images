@@ -3,9 +3,8 @@ FROM  php:fpm-alpine
 RUN   apk add --update --no-cache ${PHPIZE_DEPS} git imagemagick-dev libgomp libmemcached-dev libtool zlib-dev
 RUN   git clone https://github.com/Imagick/imagick
 RUN   pwd
-RUN   cd imagick
+RUN   cd imagick && pwd && ls -l config.m4
 RUN   pwd
-RUN   tree ./
 RUN   ls -l
 RUN   ls -l imagick/config.m4
 RUN   phpize && ./configure
