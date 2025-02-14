@@ -4,10 +4,20 @@ RUN   apk add --update --no-cache ${PHPIZE_DEPS} build-base autoconf git imagema
 # RUN   git clone https://github.com/Imagick/imagick
 # RUN   pwd
 # RUN   cd imagick && pwd && phpize && ./configure && make && make install
-RUN   pecl install imagick
+RUN   set -ex \
+      && git clone -b fix_php84 https://github.com/mvorisek/imagick \
+      && ( \
+          cd imagick \
+          && phpize \
+          && ./configure \
+          && make -j "$(nproc)" \
+          && make install \
+      ) \
+      && rm -r imagick \
+      && docker-php-ext-enable imagick
 RUN   pecl install memcached
 RUN   pecl install redis
-RUN   docker-php-ext-enable imagick memcached redis
+RUN   docker-php-ext-enable memcached redis
 RUN   apk del ${PHPIZE_DEPS} git libtool
 RUN   rm -rf /tmp/pear
 
