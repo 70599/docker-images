@@ -5,7 +5,7 @@ RUN   apk add --update --no-cache ${PHPIZE_DEPS} build-base autoconf git imagema
 # RUN   pwd
 # RUN   cd imagick && pwd && phpize && ./configure && make && make install
 RUN   set -ex \
-      && git clone -b fix_php84 https://github.com/mvorisek/imagick \
+      && git clone https://github.com/imagick/imagick \
       && ( \
           cd imagick \
           && phpize \
