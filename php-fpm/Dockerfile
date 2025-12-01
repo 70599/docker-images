@@ -57,11 +57,6 @@ RUN pecl install \
         redis
 
 # =========================
-# ⚡ Opcache（8.5 已自带）
-# =========================
-RUN docker-php-ext-enable opcache
-
-# =========================
 # 清理构建依赖
 # =========================
 RUN apk del .build-deps \
