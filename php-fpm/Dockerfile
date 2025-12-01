@@ -22,7 +22,13 @@ RUN   rm -rf /tmp/pear
 
 RUN   apk add --update --no-cache freetype-dev libwebp-dev libjpeg-turbo-dev libpng-dev libxml2-dev libzip-dev
 RUN   docker-php-ext-configure gd --with-freetype --with-webp --with-jpeg
-RUN   docker-php-ext-install -j$(nproc) bcmath exif gd mysqli opcache pdo_mysql soap zip
+RUN   docker-php-ext-install -j$(nproc) bcmath
+RUN   docker-php-ext-install -j$(nproc) exif
+RUN   docker-php-ext-install -j$(nproc) gd
+RUN   docker-php-ext-install -j$(nproc) opcache
+RUN   docker-php-ext-install -j$(nproc) pdo_mysql
+RUN   docker-php-ext-install -j$(nproc) soap
+RUN   docker-php-ext-install -j$(nproc) zip
 
 RUN   apk add --update --no-cache gmp-dev
 RUN   docker-php-ext-configure gmp
