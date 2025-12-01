@@ -25,7 +25,7 @@ RUN   docker-php-ext-configure gd --with-freetype --with-webp --with-jpeg
 RUN   docker-php-ext-install -j$(nproc) bcmath
 RUN   docker-php-ext-install -j$(nproc) exif
 RUN   docker-php-ext-install -j$(nproc) gd
-RUN   docker-php-ext-install -j$(nproc) opcache
+# RUN   docker-php-ext-install -j$(nproc) opcache
 RUN   docker-php-ext-install -j$(nproc) pdo_mysql
 RUN   docker-php-ext-install -j$(nproc) soap
 RUN   docker-php-ext-install -j$(nproc) zip
