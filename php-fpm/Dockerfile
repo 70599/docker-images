@@ -1,66 +1,34 @@
 FROM  php:fpm-alpine
+  
+RUN   apk add --update --no-cache ${PHPIZE_DEPS} build-base autoconf git imagemagick imagemagick-dev libgomp libmemcached-dev libtool zlib-dev
+# RUN   git clone https://github.com/Imagick/imagick
+# RUN   pwd
+# RUN   cd imagick && pwd && phpize && ./configure && make && make install
+RUN   set -ex \
+      && git clone https://github.com/imagick/imagick \
+      && ( \
+          cd imagick \
+          && phpize \
+          && ./configure \
+          && make -j "$(nproc)" \
+          && make install \
+      ) \
+      && docker-php-ext-enable imagick
+RUN   pecl install memcached
+RUN   pecl install redis
+RUN   docker-php-ext-enable memcached redis
+RUN   apk del ${PHPIZE_DEPS} git libtool
+RUN   rm -rf /tmp/pear
 
-# =========================
-# 系统依赖
-# =========================
-RUN apk add --no-cache \
-    freetype-dev \
-    libwebp-dev \
-    libjpeg-turbo-dev \
-    libpng-dev \
-    libxml2-dev \
-    libzip-dev \
-    gmp-dev \
-    imagemagick \
-    imagemagick-dev \
-    libmemcached-dev \
-    zlib-dev
+RUN   apk add --update --no-cache freetype-dev libwebp-dev libjpeg-turbo-dev libpng-dev libxml2-dev libzip-dev
+RUN   docker-php-ext-configure gd --with-freetype --with-webp --with-jpeg
+RUN   docker-php-ext-install -j$(nproc) bcmath exif gd mysqli pdo_mysql soap zip
 
-# =========================
-# 构建依赖（稍后删除）
-# =========================
-RUN apk add --no-cache --virtual .build-deps \
-    ${PHPIZE_DEPS} \
-    build-base \
-    autoconf \
-    libtool \
-    git
+RUN   apk add --update --no-cache gmp-dev
+RUN   docker-php-ext-configure gmp
+RUN   docker-php-ext-install -j$(nproc) gmp
 
-# =========================
-# 安装 PHP 扩展
-# =========================
+RUN   apk add --update --no-cache bash
 
-# gd
-RUN docker-php-ext-configure gd \
-        --with-freetype \
-        --with-webp \
-        --with-jpeg
 
-# 内建扩展
-RUN docker-php-ext-install -j"$(nproc)" \
-        bcmath \
-        exif \
-        gd \
-        pdo_mysql \
-        soap \
-        zip \
-        gmp
-
-# PECL 扩展
-RUN pecl install \
-        imagick \
-        memcached \
-        redis \
-    && docker-php-ext-enable \
-        imagick \
-        memcached \
-        redis
-
-# =========================
-# 清理构建依赖
-# =========================
-RUN apk del .build-deps \
-    && rm -rf /tmp/pear \
-    && rm -rf /var/cache/apk/*
-
-CMD ["php-fpm"]
+CMD   ["php-fpm"]
