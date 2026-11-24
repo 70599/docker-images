@@ -14,9 +14,30 @@ RUN   set -ex \
           && make install \
       ) \
       && docker-php-ext-enable imagick
-RUN   pecl install memcached
-RUN   pecl install redis
-RUN   docker-php-ext-enable memcached redis
+# Memcached
+RUN   set -ex \
+      && git clone https://github.com/php-memcached-dev/php-memcached.git \
+      && cd php-memcached \
+      && phpize \
+      && ./configure \
+      && make -j "$(nproc)" \
+      && make install \
+      && cd .. \
+      && rm -rf php-memcached
+
+# Redis
+RUN   set -ex \
+      && git clone https://github.com/phpredis/phpredis.git \
+      && cd phpredis \
+      && phpize \
+      && ./configure \
+      && make -j "$(nproc)" \
+      && make install \
+      && cd .. \
+      && rm -rf phpredis
+
+RUN   docker-php-ext-install mbstring
+RUN   docker-php-ext-enable mbstring memcached redis
 RUN   apk del ${PHPIZE_DEPS} git libtool
 RUN   rm -rf /tmp/pear
 
