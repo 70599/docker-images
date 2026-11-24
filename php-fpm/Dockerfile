@@ -1,6 +1,6 @@
 FROM  php:fpm-alpine
   
-RUN   apk add --update --no-cache ${PHPIZE_DEPS} build-base autoconf git imagemagick imagemagick-dev libgomp libmemcached-dev libtool zlib-dev
+RUN   apk add --update --no-cache ${PHPIZE_DEPS} build-base autoconf git imagemagick imagemagick-dev libgomp libmemcached-dev libtool oniguruma-dev zlib-dev
 # RUN   git clone https://github.com/Imagick/imagick
 # RUN   pwd
 # RUN   cd imagick && pwd && phpize && ./configure && make && make install
@@ -38,7 +38,7 @@ RUN   set -ex \
 
 RUN   docker-php-ext-install mbstring
 RUN   docker-php-ext-enable mbstring memcached redis
-RUN   apk del ${PHPIZE_DEPS} git libtool
+RUN   apk del ${PHPIZE_DEPS} git libtool oniguruma-dev
 RUN   rm -rf /tmp/pear
 
 RUN   apk add --update --no-cache freetype-dev libwebp-dev libjpeg-turbo-dev libpng-dev libxml2-dev libzip-dev
